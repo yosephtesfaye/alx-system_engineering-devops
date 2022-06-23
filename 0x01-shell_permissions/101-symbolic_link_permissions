@@ -1,3 +1,2 @@
 #!/bin/bash
-ln -s _hello  _hello
-chown vincent:staff _hello
+ln -s chown vincent:staff _hello _hello
