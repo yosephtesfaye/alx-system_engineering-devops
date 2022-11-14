@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#Display process for all users
+ps auxf
