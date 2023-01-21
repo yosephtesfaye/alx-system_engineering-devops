@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
 
-# Configures a new Ubuntu server with a custom HTTP header response
+# a script to configure Nginx so that its HTTP response contains a custom header
 
-apt-get -y update
+# The name of the custom HTTP header must be X-Served-By and the value is the hostname
 
-apt-get -y install nginx
+# shellcheck disable=SC2154
 
-ufw allow 'Nginx HTTP'
 
-echo 'Hello World!' > /var/www/html/index.nginx-debian.html
 
-sed -i '/listen 80 default_server;/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+sed -i "/http {/ a\ add_header X-Served-By \$hostname;" /etc/nginx/nginx.conf
 
-sed -i '/listen 80 default_server;/a add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
+nginx -s reload
 
-service nginx start
+# above uses sed to append the custom header configuration to nginx.conf
